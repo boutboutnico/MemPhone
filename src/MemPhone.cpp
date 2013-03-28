@@ -20,7 +20,7 @@
 
 using namespace std;
 
-const vector<vector<char> > v_digit_to_letter { vector<char> { ' ' }, // 0
+const vector<vector<char> > v_digit_to_letter { vector<char> { 'o' }, // 0
         vector<char> { 'i' }, // 1
         vector<char> { 'a', 'b', 'c' },	// 2
         vector<char> { 'd', 'e', 'f' },	// 3
@@ -32,7 +32,8 @@ const vector<vector<char> > v_digit_to_letter { vector<char> { ' ' }, // 0
         vector<char> { 'w', 'x', 'y', 'z' },	// 9
 };
 
-void constructListRec(const vector<int>& v_in,
+void constructListRec(
+                      const vector<int>& v_in,
                       const unsigned int idx_phone_number,
                       string& s_result,
                       list<string>& l_result)
@@ -56,43 +57,12 @@ void constructListRec(const vector<int>& v_in,
 	}
 }
 
-//void constructList(const vector<int>& v_in, list<string>& l_result)
-//{
-//	string s_result;
-//
-//	int cpt = 0;
-//	constructListRec(v_in, cpt, s_result, l_result);
-//
-////	// Loop first digit
-////	uint8_t ui8_current_digit;
-////	for(uint32_t j = 0; j < v_digit_to_letter.at(ui8_current_digit).size(); j++)
-////	{
-////		ui8_current_digit = v_in.at(0);
-////		s_result += v_digit_to_letter.at(ui8_current_digit).at(j);
-////
-////		// Loop second digit
-////		for(uint32_t i = 0; i < v_digit_to_letter.at(ui8_current_digit).size(); i++)
-////		{
-////			ui8_current_digit = v_in.at(1);
-////			string s_temp = s_result + v_digit_to_letter.at(ui8_current_digit).at(i);
-////
-////			l_result.push_back(s_temp);
-////		}
-////		s_result.clear();
-////	}
-//}
-
 int main()
 {
 	// http://www.liste-de-mots.com/mots-nombre-lettre/8/a/
 
-	// File handler
-	string line;
-	ifstream myfile("res/dico_a_8.txt");
-
 	// Vector
 	vector<string> v_dico_8;
-//	vector<string> v_dico_2 { "aa", "ab", "ac", "ad", "ae", "af", "ba", "bb", "bc", "bd", "be", "bf" };
 
 //	vector<int> v_input { 6, 7, 9, 3, 7, 3, 9 };
 //	vector<int> v_input { 6, 4, 4, 6, 6, 6, 6, 3 }; // Mignonne
@@ -107,7 +77,9 @@ int main()
 	int cpt = 0;
 	constructListRec(v_input, cpt, s_result, l_output);
 
+	//--------------------------------------------------
 	// Display l_output
+	//--------------------------------------------------
 	cout << "Display l_output list :" << endl;
 	for(list<string>::iterator it = l_output.begin(); it != l_output.end(); ++it)
 	{
@@ -115,12 +87,12 @@ int main()
 	}
 	cout << "l_output size : " << l_output.size() << endl;
 
-	// Debug
-//	char X;
-
-	//
+	//--------------------------------------------------
 	// Copy file in RAM
-	//
+	//--------------------------------------------------
+	string line;
+	ifstream myfile("res/dico_a_8.txt");
+
 	if(myfile.is_open())
 	{
 		while(myfile.good())
@@ -132,39 +104,38 @@ int main()
 	}
 	else cout << "Unable to open file";
 
-	//
+	//--------------------------------------------------
 	// Find word
-	//
+	//--------------------------------------------------
 	vector<string>::size_type idx = 0;
-//	vector<string>::size_type v_size = v_dico_8.size();
-
 	while(l_output.empty() == false)
 	{
-		string s = l_output.front();
+		string string = l_output.front();
 
 		for(idx = 0; idx < v_dico_8.size(); idx++)
 		{
-			if(s == v_dico_8.at(idx))
+			if(string == v_dico_8.at(idx))
 			{
-				cout << "Found : " << s << " " << v_dico_8.at(idx) << endl;
+				cout << "Found : " << string << " " << v_dico_8.at(idx) << endl;
 			}
 		}
-
 		l_output.pop_front();
 	}
 
-	//
+	//--------------------------------------------------
 	// Display vector
-	//
+	//--------------------------------------------------
 //	for(idx = 0; idx < v_dico_8.size(); idx++)
 //	{
 //		cout << v_dico_8.at(idx) << endl;
 //	}
 //	cout << "v_dico_8 size : " << v_dico_8.size() << endl;
 
-	//
+	//--------------------------------------------------
 	// Exit
-	//
+	//--------------------------------------------------
+	// Debug
+//	char X;
 //	while(cin >> X && X != 'q')
 //	{
 //	};

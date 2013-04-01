@@ -6,6 +6,9 @@
 // Description : Hello World in C++, Ansi-style
 //============================================================================
 
+/*****************************************************************************
+ * INCLUDE
+ *****************************************************************************/
 // reading a text file
 #include <iostream>
 #include <fstream>
@@ -17,160 +20,183 @@
 #include <array>
 #include <initializer_list>
 #include <list>
+#include <set>
 
+#include "Dictionary.h"
+#include "Converter.h"
+
+/*****************************************************************************
+ * NAMESPACE
+ *****************************************************************************/
 using namespace std;
 
-const vector<vector<char> > v_digit_to_letter { vector<char> { 'o' }, // 0
-        vector<char> { 'i' }, // 1
-        vector<char> { 'a', 'b', 'c' },	// 2
-        vector<char> { 'd', 'e', 'f' },	// 3
-        vector<char> { 'g', 'h', 'i' },	// 4
-        vector<char> { 'j', 'k', 'l' },	// 5
-        vector<char> { 'm', 'n', 'o' },	// 6
-        vector<char> { 'p', 'q', 'r', 's' },	// 7
-        vector<char> { 't', 'u', 'v' },	// 8
-        vector<char> { 'w', 'x', 'y', 'z' },	// 9
-};
+/*****************************************************************************
+ * MAIN
+ *****************************************************************************/
 
-void constructListRec(
-                      const vector<int>& v_in,
-                      const unsigned int idx_phone_number,
-                      string& s_result,
-                      list<string>& l_result)
-{
-	if(idx_phone_number >= v_in.size())
-	{
-		l_result.push_back(s_result);
-		return;
-	}
 
-	int current_digit = v_in.at(idx_phone_number);
 
-	for(uint32_t i = 0; i < v_digit_to_letter.at(current_digit).size(); i++)
-	{
-		// Append current letter to existing result
-		string s_copy = s_result;
-		s_copy += v_digit_to_letter.at(current_digit).at(i);
+void DisplayList(const list<string>& l_to_display, const string& s_title);
+void DisplayVector(const vector<string>& v_to_display, const string& s_title);
 
-		// Call next digit in phone number
-		constructListRec(v_in, idx_phone_number + 1, s_copy, l_result);
-	}
-}
-
-int main()
-{
-	// http://www.liste-de-mots.com/mots-nombre-lettre/8/a/
-
-	// Vector
-	vector<string> v_dico_8;
-
-//	vector<int> v_input { 6, 7, 9, 3, 7, 3, 9 };
-//	vector<int> v_input { 6, 4, 4, 6, 6, 6, 6, 3 }; // Mignonne
-//	vector<int> v_input { 3, 2, 1, 3, 8, 7, 2, 8 }; // Mathieu
-	vector<int> v_input { 2, 9, 2, 4, 3, 8, 7, 9 }; //
-//	vector<int> v_input { 3, 1, 7, 3, 3, 6, 8, 8 }; //
-	list<string> l_output;
-
-//	constructList(v_input, l_output);
-
-	string s_result;
-	int cpt = 0;
-	constructListRec(v_input, cpt, s_result, l_output);
-
-	//--------------------------------------------------
-	// Display l_output
-	//--------------------------------------------------
-	cout << "Display l_output list :" << endl;
-	for(list<string>::iterator it = l_output.begin(); it != l_output.end(); ++it)
-	{
-		cout << *it << endl;
-	}
-	cout << "l_output size : " << l_output.size() << endl;
-
-	//--------------------------------------------------
-	// Copy file in RAM
-	//--------------------------------------------------
-	string line;
-	ifstream myfile("res/dico_a_8.txt");
-
-	if(myfile.is_open())
-	{
-		while(myfile.good())
-		{
-			getline(myfile, line);
-			v_dico_8.push_back(line);
-		}
-		myfile.close();
-	}
-	else cout << "Unable to open file";
-
-	//--------------------------------------------------
-	// Find word
-	//--------------------------------------------------
-	vector<string>::size_type idx = 0;
-	while(l_output.empty() == false)
-	{
-		string string = l_output.front();
-
-		for(idx = 0; idx < v_dico_8.size(); idx++)
-		{
-			if(string == v_dico_8.at(idx))
-			{
-				cout << "Found : " << string << " " << v_dico_8.at(idx) << endl;
-			}
-		}
-		l_output.pop_front();
-	}
-
-	//--------------------------------------------------
-	// Display vector
-	//--------------------------------------------------
-//	for(idx = 0; idx < v_dico_8.size(); idx++)
-//	{
-//		cout << v_dico_8.at(idx) << endl;
-//	}
-//	cout << "v_dico_8 size : " << v_dico_8.size() << endl;
-
-	//--------------------------------------------------
-	// Exit
-	//--------------------------------------------------
-	// Debug
-//	char X;
-//	while(cin >> X && X != 'q')
-//	{
-//	};
-
-	return 0;
-}
-
-//void constructListRec(const vector<int>& v_in, const unsigned int idx_phone_number, string& s_result, list<string>& l_result)
+//void constructListRec(
+//                      const vector<int>& v_in,
+//                      const unsigned int idx_phone_number,
+//                      string& s_result,
+//                      list<string>& l_result)
 //{
-//	static uint32_t cpt = 0;
-////	cout << "ConstructListRec cpt : " << cpt++ << endl;
-//
-////	cout << "ui8_idx_phone_number : " << idx_phone_number << endl;
 //	if(idx_phone_number >= v_in.size())
 //	{
 //		l_result.push_back(s_result);
-////		cout << "Exit" << endl;
 //		return;
 //	}
 //
 //	int current_digit = v_in.at(idx_phone_number);
-////	cout << "current_digit : " << current_digit << endl;
 //
 //	for(uint32_t i = 0; i < v_digit_to_letter.at(current_digit).size(); i++)
 //	{
-////		cout << "i : " << i << endl;
-//
 //		// Append current letter to existing result
 //		string s_copy = s_result;
 //		s_copy += v_digit_to_letter.at(current_digit).at(i);
-////		cout << "s_result : " << s_result << endl;
 //
 //		// Call next digit in phone number
 //		constructListRec(v_in, idx_phone_number + 1, s_copy, l_result);
 //	}
-//
-////	cout << "End of construtListRec" << endl;
 //}
+
+string FormatString(const string s_in)
+{
+	string s_temp = s_in;
+
+	const map<char, char> m_character = { { 'à', 'a' }, //
+	        { 'â', 'a' }, //
+	        { 'ç', 'c' }, //
+	        { 'é', 'e' }, //
+	        { 'è', 'e' }, //
+	        { 'ê', 'e' }, //
+	        { 'î', 'i' }, //
+	        { 'û', 'u' }, //
+	        { 'ù', 'u' }, //
+	        { 'ü', 'u' }, //
+	        { 'ô', 'o' }, //
+	        };
+
+	for(auto it = m_character.cbegin(); it != m_character.cend(); ++it)
+	{
+		size_t found_pos = s_temp.find(it->first);
+
+		// Find something
+		if(found_pos != string::npos)
+		{
+			s_temp.replace(found_pos, 1, &it->second, 1);
+
+			// Reset iterator to search again the same character
+			it--;
+
+//			cout << "s_in : " << s_in << endl;
+//			cout << "s_temp : " << s_temp << endl;
+//			cout << "pos : " << found_pos << endl;
+		}
+	}
+
+	return s_temp;
+}
+
+int main()
+{
+//	string phone_number = "33368337"; // édentées
+//	string phone_number = "66646667"; // nominons
+//	string phone_number = "77997401"; // Pierre
+//	string phone_number = "07261634"; // Audrey
+//	string phone_number = "26390119"; // Marius
+//	string phone_number = "32138728"; // Mathieu
+//	string phone_number = "29243879"; // Manu
+//	string phone_number = "71719963"; // Franck
+//	string phone_number = "31733688"; // Marie ade
+	string phone_number = "07494858"; // Youyou
+
+	set<string> set_generated;
+	Converter converter;
+	converter.ToWords(phone_number, set_generated);
+
+	//--------------------------------------------------
+	// Get Dictionary
+	//--------------------------------------------------
+	Dictionary dico;
+	const vector<string>& dico_8 = dico.GetDico(Dictionary::DICO_8_LETTERS);
+
+//	DisplayVector(dico_8, "Dictionary 8 letters");
+
+	//--------------------------------------------------
+	// Find word
+	//--------------------------------------------------
+	list<string> list_match;
+	vector<string>::size_type idx = 0;
+	uint32_t progression = 0, prog_old = 0;
+
+	for(idx = 0; idx < dico_8.size(); idx++)
+	{
+		progression = idx * 100 / dico_8.size();
+
+		if(progression != prog_old)
+		{
+			cout << progression << endl;
+			prog_old = progression;
+		}
+
+		string string_format = FormatString(dico_8.at(idx));
+
+		// Set
+		set<string>::iterator it = set_generated.find(string_format);
+		if(it != set_generated.end())
+		{
+//			cout << "Found : " << *it << " " << v_dico_8.at(idx) << endl;
+			list_match.push_back(dico_8.at(idx));
+		}
+
+		// List
+//		for(list<string>::iterator it = l_generated.begin(); it != l_generated.end(); it++)
+//		{
+//			if(*it == string_format)
+//			{
+//				cout << "Found : " << *it << " " << v_dico_8.at(idx) << endl;
+//			}
+//		}
+	}
+
+	//--------------------------------------------------
+	// Display result
+	//--------------------------------------------------
+	DisplayList(list_match, "Match list");
+
+	cout << "EXIT" << endl;
+	return 0;
+}
+
+/**
+ *
+ * @param i_list
+ */
+void DisplayList(const list<string>& l_to_display, const string& s_title)
+{
+	cout << s_title << " : " << endl;
+
+	for(auto it = l_to_display.begin(); it != l_to_display.end(); it++)
+	{
+		cout << *it << endl;
+	}
+	cout << "Size : " << l_to_display.size() << endl;
+}
+
+void DisplayVector(const vector<string>& v_to_display, const string& s_title)
+{
+	cout << s_title << " : " << endl;
+
+	vector<string>::size_type idx = 0;
+	for(idx = 0; idx < v_to_display.size(); idx++)
+	{
+		cout << v_to_display.at(idx) << endl;
+	}
+	cout << "Size : " << v_to_display.size() << endl;
+}
+

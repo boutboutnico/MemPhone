@@ -9,106 +9,94 @@
 //	 End of the Copyright Notice
 
 /*************************************************************************//**
- * @file 	Dictionary.cpp
+ * @file 	Finder.cpp
  * @brief	xx
  * @author	Boutboutnico
- * @date	1 avr. 2013
+ * @date	3 avr. 2013
  * @company	Itron
  * @site	Chasseneuil
  * @product	xx
  * @module	xx
  *****************************************************************************/
 
-#include "dictionary.h"
-
 /*****************************************************************************
  * INCLUDE
  *****************************************************************************/
+#include "finder.h"
+
 #include <iostream>
-#include <fstream>
+
+/*****************************************************************************
+ * NAMESPACE
+ *****************************************************************************/
+
+/*****************************************************************************
+ * GLOBALE VARIABLE
+ *****************************************************************************/
 
 /*****************************************************************************
  * PUBLIC IMPLEMENTATION
  *****************************************************************************/
 
-const vector<string>& Dictionary::GetDico(const E8_Dico_Type e8_dico)
+void Finder::FindMatch(const vector<string>& v_dico, const set<string>& s_search, list<string>& l_match)
 {
-	string dico_filename = repository_name;
-	vector<string>* current_dico;
+	vector<string>::size_type idx = 0;
+	uint32_t progression = 0, prog_old = 0;
 
-	switch(e8_dico){
-	case DICO_7_LETTERS:
-		current_dico = &v_dico_7;
-		break;
-
-	case DICO_8_LETTERS:
-		current_dico = &v_dico_8;
-		break;
-
-	default:
-		cout << "Wrong dictionary type" << endl;
-		break;
-	}
-
-	if(current_dico->empty() == false)
+	for(idx = 0; idx < v_dico.size(); idx++)
 	{
-		return *current_dico;
-	}
+		progression = idx * 100 / v_dico.size();
 
-	ConstructDico(e8_dico);
-	return *current_dico;
+		if(progression != prog_old)
+		{
+			cout << progression << " ";
+			cout.flush();
+			prog_old = progression;
+
+			if(progression % 10 == 0) cout << endl;
+		}
+
+		string string_format = FormatString(v_dico.at(idx));
+
+		// Set
+		set<string>::iterator it = s_search.find(string_format);
+		if(it != s_search.end())
+		{
+//			cout << "Found : " << *it << " " << v_v_dico.at(idx) << endl;
+			l_match.push_back(v_dico.at(idx));
+		}
+	}
 }
+
 /*****************************************************************************
  * PRIVATE IMPLEMENTATION
  *****************************************************************************/
 
-void Dictionary::ConstructDico(const E8_Dico_Type e8_dico)
+string Finder::FormatString(const string s_in)
 {
-	cout << "Construct dictionary " << e8_dico << endl;
+	string s_temp = s_in;
 
-	string dico_filename = repository_name;
-	vector<string>* current_dico;
-
-	//--------------------------------------------------
-	// Select Dictionary
-	//--------------------------------------------------
-	switch(e8_dico){
-	case DICO_7_LETTERS:
-		dico_filename.append(filename_dico_7);
-		current_dico = &v_dico_7;
-		break;
-
-	case DICO_8_LETTERS:
-		dico_filename.append(filename_dico_8);
-		current_dico = &v_dico_8;
-		break;
-
-	default:
-		cout << "Wrong dictionary type" << endl;
-		break;
-	}
-
-	// Add extension to filename
-	dico_filename.append(filename_extension);
-
-
-	//--------------------------------------------------
-	// Create dictionary from file
-	//--------------------------------------------------
-	ifstream dico_file(const_cast<char*>(dico_filename.c_str()));
-	string line;
-
-	if(dico_file.is_open())
+	for(auto it = m_character.cbegin(); it != m_character.cend(); ++it)
 	{
-		while(dico_file.good())
+		size_t found_pos = s_temp.find(it->first);
+
+		// Find something
+		if(found_pos != string::npos)
 		{
-			getline(dico_file, line);
-			current_dico->push_back(line);
+			s_temp.replace(found_pos, 1, &it->second, 1);
+
+			// Reset iterator to search again the same character
+			it--;
+
+//			cout << "s_in : " << s_in << endl;
+//			cout << "s_temp : " << s_temp << endl;
+//			cout << "pos : " << found_pos << endl;
 		}
-		dico_file.close();
 	}
-	else cout << "Unable to open file" << endl;
+
+	return s_temp;
 }
+
 /*****************************************************************************
  * END OF FILE
  *****************************************************************************/

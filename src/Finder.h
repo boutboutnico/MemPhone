@@ -9,106 +9,75 @@
 //	 End of the Copyright Notice
 
 /*************************************************************************//**
- * @file 	Dictionary.cpp
+ * @file 	Finder.h
  * @brief	xx
  * @author	Boutboutnico
- * @date	1 avr. 2013
+ * @date	3 avr. 2013
  * @company	Itron
  * @site	Chasseneuil
  * @product	xx
  * @module	xx
  *****************************************************************************/
 
-#include "dictionary.h"
+#ifndef FINDER_H_
+#define FINDER_H_
+
+/*****************************************************************************
+ * DEFINITION
+ *****************************************************************************/
+#include <string>
+#include <map>
+#include <vector>
+#include <list>
+#include <set>
 
 /*****************************************************************************
  * INCLUDE
  *****************************************************************************/
-#include <iostream>
-#include <fstream>
 
 /*****************************************************************************
- * PUBLIC IMPLEMENTATION
+ * NAMESPACE
  *****************************************************************************/
+using namespace std;
 
-const vector<string>& Dictionary::GetDico(const E8_Dico_Type e8_dico)
-{
-	string dico_filename = repository_name;
-	vector<string>* current_dico;
-
-	switch(e8_dico){
-	case DICO_7_LETTERS:
-		current_dico = &v_dico_7;
-		break;
-
-	case DICO_8_LETTERS:
-		current_dico = &v_dico_8;
-		break;
-
-	default:
-		cout << "Wrong dictionary type" << endl;
-		break;
-	}
-
-	if(current_dico->empty() == false)
-	{
-		return *current_dico;
-	}
-
-	ConstructDico(e8_dico);
-	return *current_dico;
-}
 /*****************************************************************************
- * PRIVATE IMPLEMENTATION
+ * CLASS
  *****************************************************************************/
-
-void Dictionary::ConstructDico(const E8_Dico_Type e8_dico)
+/**
+ * @class 	xx
+ * @brief	xx
+ * @author	Boutboutnico
+ * @date	3 avr. 2013
+ */
+class Finder
 {
-	cout << "Construct dictionary " << e8_dico << endl;
+public:
+	void FindMatch(const vector<string>& v_dico, const set<string>& s_search, list<string>& l_match);
 
-	string dico_filename = repository_name;
-	vector<string>* current_dico;
-
-	//--------------------------------------------------
-	// Select Dictionary
-	//--------------------------------------------------
-	switch(e8_dico){
-	case DICO_7_LETTERS:
-		dico_filename.append(filename_dico_7);
-		current_dico = &v_dico_7;
-		break;
-
-	case DICO_8_LETTERS:
-		dico_filename.append(filename_dico_8);
-		current_dico = &v_dico_8;
-		break;
-
-	default:
-		cout << "Wrong dictionary type" << endl;
-		break;
-	}
-
-	// Add extension to filename
-	dico_filename.append(filename_extension);
-
+private:
+	string FormatString(const string s_in);
 
 	//--------------------------------------------------
-	// Create dictionary from file
+	// Conversion table
 	//--------------------------------------------------
-	ifstream dico_file(const_cast<char*>(dico_filename.c_str()));
-	string line;
+	const map<char, char> m_character = { //
+	        { 'à', 'a' }, //
+	                { 'â', 'a' }, //
+	                { 'ç', 'c' }, //
+	                { 'é', 'e' }, //
+	                { 'è', 'e' }, //
+	                { 'ê', 'e' }, //
+	                { 'î', 'i' }, //
+	                { 'ï', 'i' }, //
+	                { 'û', 'u' }, //
+	                { 'ù', 'u' }, //
+	                { 'ü', 'u' }, //
+	                { 'ô', 'o' }, //
+	        };
 
-	if(dico_file.is_open())
-	{
-		while(dico_file.good())
-		{
-			getline(dico_file, line);
-			current_dico->push_back(line);
-		}
-		dico_file.close();
-	}
-	else cout << "Unable to open file" << endl;
-}
+};
+
+#endif /* FINDER_H_ */
 /*****************************************************************************
  * END OF FILE
  *****************************************************************************/

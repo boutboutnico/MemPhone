@@ -50,8 +50,8 @@ public:
 	//--------------------------------------------------
 	typedef enum
 	{
-		DICO_8_LETTERS = 0x00,
-		DICO_COUNT,
+		DICO_7_LETTERS = 0x07,
+		DICO_8_LETTERS = 0x08,
 	} E8_Dico_Type;
 
 public:
@@ -66,6 +66,7 @@ private:
 	//--------------------------------------------------
 	// Attributes
 	//--------------------------------------------------
+	vector<string> v_dico_7;
 	vector<string> v_dico_8;
 
 	//--------------------------------------------------
@@ -75,6 +76,7 @@ private:
 	const string filename_extension = ".txt";
 
 	const string filename_dico_8 = "dico_8_fr";
+	const string filename_dico_7 = "dico_7_fr";
 
 };
 

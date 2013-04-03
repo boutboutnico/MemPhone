@@ -34,8 +34,6 @@ using namespace std;
  * MAIN
  *****************************************************************************/
 
-
-
 void DisplayList(const list<string>& l_to_display, const string& s_title);
 void DisplayVector(const vector<string>& v_to_display, const string& s_title);
 
@@ -75,6 +73,7 @@ string FormatString(const string s_in)
 	        { 'è', 'e' }, //
 	        { 'ê', 'e' }, //
 	        { 'î', 'i' }, //
+	        { 'ï', 'i' }, //
 	        { 'û', 'u' }, //
 	        { 'ù', 'u' }, //
 	        { 'ü', 'u' }, //
@@ -106,14 +105,14 @@ int main()
 {
 //	string phone_number = "33368337"; // édentées
 //	string phone_number = "66646667"; // nominons
-//	string phone_number = "77997401"; // Pierre
+	string phone_number = "77997401"; // Pierre
 //	string phone_number = "07261634"; // Audrey
 //	string phone_number = "26390119"; // Marius
 //	string phone_number = "32138728"; // Mathieu
 //	string phone_number = "29243879"; // Manu
 //	string phone_number = "71719963"; // Franck
 //	string phone_number = "31733688"; // Marie ade
-	string phone_number = "07494858"; // Youyou
+//	string phone_number = "07494858"; // Youyou
 
 	set<string> set_generated;
 	Converter converter;
@@ -140,8 +139,11 @@ int main()
 
 		if(progression != prog_old)
 		{
-			cout << progression << endl;
+			cout << progression << " ";
+			cout.flush();
 			prog_old = progression;
+
+			if(progression % 10 == 0) cout << endl;
 		}
 
 		string string_format = FormatString(dico_8.at(idx));
@@ -167,7 +169,7 @@ int main()
 	//--------------------------------------------------
 	// Display result
 	//--------------------------------------------------
-	DisplayList(list_match, "Match list");
+	DisplayList(list_match, "100\n\nMatch list");
 
 	cout << "EXIT" << endl;
 	return 0;

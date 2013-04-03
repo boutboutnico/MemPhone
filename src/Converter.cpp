@@ -25,6 +25,7 @@
 #include "converter.h"
 
 #include <cstdlib>
+#include <iostream>
 
 /*****************************************************************************
  * NAMESPACE
@@ -86,6 +87,8 @@ void Converter::ToWordsRec(
 
 void Converter::SplitPhoneNumber(const string& phone_number, vector<int>& vector_digit)
 {
+	if(phone_number.size() != 8) cout << "ERROR : phone number size is != 8" << endl;
+
 	for(uint8_t idx = 0; idx < phone_number.length(); idx++)
 	{
 		const char chara = phone_number.at(idx);

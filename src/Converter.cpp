@@ -38,11 +38,15 @@
 /*****************************************************************************
  * PUBLIC IMPLEMENTATION
  *****************************************************************************/
-void Converter::ToWords(const string& phone_number, set<string>& set_words)
+void Converter::ToWords(
+                        const string& phone_number,
+                        const uint8_t start_index,
+                        const uint8_t word_length,
+                        set<string>& set_words)
 {
 	vector<int> v_digits;
 
-	SplitPhoneNumber(phone_number, v_digits);
+	SplitPhoneNumber(phone_number, start_index, word_length, v_digits);
 
 	int cpt = 0;
 	string s_tmp;
@@ -54,6 +58,13 @@ void Converter::ToWords(const string& phone_number, set<string>& set_words)
  * PRIVATE IMPLEMENTATION
  *****************************************************************************/
 
+/**
+ *
+ * @param v_in
+ * @param idx_digit
+ * @param s_result
+ * @param set_words
+ */
 void Converter::ToWordsRec(
                            const vector<int>& v_in,
                            const unsigned int idx_digit,
@@ -65,6 +76,7 @@ void Converter::ToWordsRec(
 	//--------------------------------------------------
 	if(idx_digit >= v_in.size())
 	{
+		cout << s_result << endl;
 		set_words.insert(s_result);
 		return;
 	}
@@ -85,11 +97,25 @@ void Converter::ToWordsRec(
 	}
 }
 
-void Converter::SplitPhoneNumber(const string& phone_number, vector<int>& vector_digit)
+/**
+ *
+ * @param phone_number
+ * @param word_length
+ * @param vector_digit
+ */
+void Converter::SplitPhoneNumber(
+                                 const string& phone_number,
+                                 const uint8_t start_index,
+                                 const uint8_t word_length,
+                                 vector<int>& vector_digit)
 {
-	if(phone_number.size() != 8) cout << "ERROR : phone number size is != 8" << endl;
+	if(phone_number.size() < word_length)
+	{
+		cout << "ERROR : phone number size is < " << word_length << endl;
+		return;
+	}
 
-	for(uint8_t idx = 0; idx < phone_number.length(); idx++)
+	for(uint8_t idx = start_index; idx < word_length; idx++)
 	{
 		const char chara = phone_number.at(idx);
 		vector_digit.push_back(atoi(&chara));

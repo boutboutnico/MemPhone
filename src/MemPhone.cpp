@@ -41,7 +41,8 @@ void DisplayVector(const vector<string>& v_to_display, const string& s_title);
 int main()
 {
 //	string phone_number = "33368337"; // édentées
-	string phone_number = "66646667"; // nominons
+//	string phone_number = "66646667"; // nominons
+	string phone_number = "22288837";  // abattues
 //	string phone_number = "77997401"; // Pierre
 //	string phone_number = "07261634"; // Audrey
 //	string phone_number = "26390119"; // Marius
@@ -51,15 +52,20 @@ int main()
 //	string phone_number = "31733688"; // Marie ade
 //	string phone_number = "07494858"; // Youyou
 
-	set<string> set_generated;
+	set<string> s_gen_8;
+	set<string> s_gen_7_0;
+	set<string> s_gen_7_1;
+
 	Converter converter;
-	converter.ToWords(phone_number, set_generated);
+	converter.ToWords(phone_number, 0, 8, s_gen_8);
+	converter.ToWords(phone_number, 0, 7, s_gen_7_0);
+	converter.ToWords(phone_number, 1, 7, s_gen_7_1);
 
 	//--------------------------------------------------
 	// Get Dictionary
 	//--------------------------------------------------
 	Dictionary dico;
-//	const vector<string>& dico_7 = dico.GetDico(Dictionary::DICO_7_LETTERS);
+	const vector<string>& dico_7 = dico.GetDico(Dictionary::DICO_7_LETTERS);
 	const vector<string>& dico_8 = dico.GetDico(Dictionary::DICO_8_LETTERS);
 
 //	DisplayVector(dico_8, "Dictionary 8 letters");
@@ -70,12 +76,14 @@ int main()
 	list<string> list_match;
 
 	Finder finder;
-	finder.FindMatch(dico_8, set_generated, list_match);
+	finder.FindMatch(dico_8, s_gen_8, list_match);
+	finder.FindMatch(dico_7, s_gen_7_0, list_match);
+	finder.FindMatch(dico_7, s_gen_7_1, list_match);
 
 	//--------------------------------------------------
 	// Display result
 	//--------------------------------------------------
-	DisplayList(list_match, "100\n\nMatch list");
+	DisplayList(list_match, "\nMatch list");
 
 	cout << "EXIT" << endl;
 	return 0;

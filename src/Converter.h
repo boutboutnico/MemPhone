@@ -51,7 +51,11 @@ using namespace std;
 class Converter
 {
 public:
-	void ToWords(const string& phone_number, set<string>& set_words);
+	void ToWords(
+	             const string& phone_number,
+	             const uint8_t start_index,
+	             const uint8_t word_length,
+	             set<string>& set_words);
 
 private:
 	void ToWordsRec(
@@ -60,7 +64,11 @@ private:
 	                string& s_result,
 	                set<string>& set_words);
 
-	void SplitPhoneNumber(const string& phone_number, vector<int>& vector_digit);
+	void SplitPhoneNumber(
+	                      const string& phone_number,
+	                      const uint8_t start_index,
+	                      const uint8_t word_length,
+	                      vector<int>& vector_digit);
 
 	//--------------------------------------------------
 	// Conversion table

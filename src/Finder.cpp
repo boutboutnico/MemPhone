@@ -41,20 +41,20 @@
 void Finder::FindMatch(const vector<string>& v_dico, const set<string>& s_search, list<string>& l_match)
 {
 	vector<string>::size_type idx = 0;
-	uint32_t progression = 0, prog_old = 0;
+//	uint32_t progression = 0, prog_old = 0;
 
 	for(idx = 0; idx < v_dico.size(); idx++)
 	{
-		progression = idx * 100 / v_dico.size();
-
-		if(progression != prog_old)
-		{
-			cout << progression << " ";
-			cout.flush();
-			prog_old = progression;
-
-			if(progression % 10 == 0) cout << endl;
-		}
+//		progression = idx * 100 / v_dico.size();
+//
+//		if(progression != prog_old)
+//		{
+//			cout << progression << " ";
+//			cout.flush();
+//			prog_old = progression;
+//
+//			if(progression % 10 == 0) cout << endl;
+//		}
 
 		string string_format = FormatString(v_dico.at(idx));
 

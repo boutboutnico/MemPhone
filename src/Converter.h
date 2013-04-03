@@ -73,8 +73,9 @@ private:
 	//--------------------------------------------------
 	// Conversion table
 	//--------------------------------------------------
-	const vector<vector<char> > digit_to_letter { vector<char> { 'o' }, // 0
-	        vector<char> { 'i', 'l' }, // 1
+	const vector<vector<char> > digit_to_letter { //
+	vector<char> { 'o', '-' }, // 0
+	        vector<char> { 'i', 'l', '-' }, // 1
 	        vector<char> { 'a', 'b', 'c' },	// 2
 	        vector<char> { 'd', 'e', 'f' },	// 3
 	        vector<char> { 'g', 'h', 'i' },	// 4

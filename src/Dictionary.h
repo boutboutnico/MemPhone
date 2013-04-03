@@ -27,6 +27,7 @@
  *****************************************************************************/
 #include <vector>
 #include <string>
+#include <array>
 
 /*****************************************************************************
  * NAMESPACE
@@ -50,8 +51,12 @@ public:
 	//--------------------------------------------------
 	typedef enum
 	{
-		DICO_7_LETTERS = 0x07,
-		DICO_8_LETTERS = 0x08,
+		DICO_4_LETTERS = 0x00,
+		DICO_5_LETTERS,
+		DICO_6_LETTERS,
+		DICO_7_LETTERS,
+		DICO_8_LETTERS,
+		DICO_COUNT
 	} E8_Dico_Type;
 
 public:
@@ -66,8 +71,7 @@ private:
 	//--------------------------------------------------
 	// Attributes
 	//--------------------------------------------------
-	vector<string> v_dico_7;
-	vector<string> v_dico_8;
+	std::array<vector<string>, DICO_COUNT> av_dico;
 
 	//--------------------------------------------------
 	// Dictionary name file
@@ -75,8 +79,11 @@ private:
 	const string repository_name = "res/";
 	const string filename_extension = ".txt";
 
-	const string filename_dico_8 = "dico_8_fr";
+	const string filename_dico_4 = "dico_4_fr";
+	const string filename_dico_5 = "dico_5_fr";
+	const string filename_dico_6 = "dico_6_fr";
 	const string filename_dico_7 = "dico_7_fr";
+	const string filename_dico_8 = "dico_8_fr";
 
 };
 

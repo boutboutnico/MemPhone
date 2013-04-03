@@ -76,7 +76,7 @@ void Converter::ToWordsRec(
 	//--------------------------------------------------
 	if(idx_digit >= v_in.size())
 	{
-		cout << s_result << endl;
+//		cout << s_result << endl;
 		set_words.insert(s_result);
 		return;
 	}

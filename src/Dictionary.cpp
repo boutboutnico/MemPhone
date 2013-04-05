@@ -36,12 +36,7 @@ const vector<string>& Dictionary::GetDico(const E8_Dico_Type e8_dico)
 	string dico_filename = repository_name;
 	vector<string>* current_dico;
 
-	if(e8_dico >= DICO_COUNT)
-	{
-		cout << "Wrong dictionary type" << endl;
-	}
-
-	current_dico = &av_dico[e8_dico];
+	current_dico = &av_dico[e8_dico - DICO_FIRST];
 
 	if(current_dico->empty() == false)
 	{
@@ -57,39 +52,41 @@ const vector<string>& Dictionary::GetDico(const E8_Dico_Type e8_dico)
 
 void Dictionary::ConstructDico(const E8_Dico_Type e8_dico)
 {
-	cout << "Construct dictionary " << e8_dico + 4 << endl;
+	cout << "Construct dictionary " << e8_dico << endl;
 
 	string dico_filename = repository_name;
-	vector<string>* current_dico = &av_dico[e8_dico];
+	vector<string>* current_dico = &av_dico[e8_dico - DICO_FIRST];
 
-	//--------------------------------------------------
-	// Select Dictionary
-	//--------------------------------------------------
-	switch(e8_dico){
-	case DICO_4_LETTERS:
-		dico_filename.append(filename_dico_4);
-		break;
+//	//--------------------------------------------------
+//	// Select Dictionary
+//	//--------------------------------------------------
+//	switch(e8_dico){
+//	case DICO_4_LETTERS:
+//		dico_filename.append(filename_dico_4);
+//		break;
+//
+//	case DICO_5_LETTERS:
+//		dico_filename.append(filename_dico_5);
+//		break;
+//
+//	case DICO_6_LETTERS:
+//		dico_filename.append(filename_dico_6);
+//		break;
+//
+//	case DICO_7_LETTERS:
+//		dico_filename.append(filename_dico_7);
+//		break;
+//
+//	case DICO_8_LETTERS:
+//		dico_filename.append(filename_dico_8);
+//		break;
+//
+//	default:
+//		cout << "Wrong dictionary type" << endl;
+//		break;
+//	}
 
-	case DICO_5_LETTERS:
-		dico_filename.append(filename_dico_5);
-		break;
-
-	case DICO_6_LETTERS:
-		dico_filename.append(filename_dico_6);
-		break;
-
-	case DICO_7_LETTERS:
-		dico_filename.append(filename_dico_7);
-		break;
-
-	case DICO_8_LETTERS:
-		dico_filename.append(filename_dico_8);
-		break;
-
-	default:
-		cout << "Wrong dictionary type" << endl;
-		break;
-	}
+	dico_filename.append("dico_fr");
 
 	// Add extension to filename
 	dico_filename.append(filename_extension);
@@ -105,6 +102,10 @@ void Dictionary::ConstructDico(const E8_Dico_Type e8_dico)
 		while(dico_file.good())
 		{
 			getline(dico_file, line);
+
+			// Check size according to dico type
+			if(line.size() != e8_dico) continue;
+
 			current_dico->push_back(line);
 		}
 		dico_file.close();

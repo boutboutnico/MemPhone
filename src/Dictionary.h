@@ -51,12 +51,13 @@ public:
 	//--------------------------------------------------
 	typedef enum
 	{
-		DICO_4_LETTERS = 0x00,
-		DICO_5_LETTERS,
-		DICO_6_LETTERS,
-		DICO_7_LETTERS,
-		DICO_8_LETTERS,
-		DICO_COUNT
+		DICO_4_LETTERS = 0x04,
+		DICO_5_LETTERS = 0x05,
+		DICO_6_LETTERS = 0x06,
+		DICO_7_LETTERS = 0x07,
+		DICO_8_LETTERS = 0x08,
+		DICO_COUNT = 0x05,
+		DICO_FIRST = DICO_4_LETTERS,
 	} E8_Dico_Type;
 
 public:
